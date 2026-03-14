@@ -1,0 +1,77 @@
+import React from 'react';
+import Svg, {
+  Path,
+  G,
+  Rect,
+  Defs,
+  Filter,
+  FeFlood,
+  FeColorMatrix,
+  FeOffset,
+  FeGaussianBlur,
+  FeComposite,
+  FeBlend,
+  ClipPath,
+} from 'react-native-svg';
+
+interface IconProps {
+  width?: number;
+  height?: number;
+}
+
+const AppleIcon: React.FC<IconProps> = ({ width = 56, height = 56 }) => {
+  return (
+    <Svg width={width} height={height} viewBox="0 0 56 56" fill="none">
+      <G clipPath="url(#clip0_0_282)">
+        <G filter="url(#filter0_d_0_282)">
+          <Path d="M50 6H6V50H50V6Z" fill="white" />
+        </G>
+        <Path
+          d="M28.2227 20.3846C29.0547 20.3846 30.0977 19.8048 30.7188 19.0318C31.2812 18.3312 31.6914 17.3528 31.6914 16.3744C31.6914 16.2416 31.6797 16.1087 31.6562 16C30.7305 16.0362 29.6172 16.6402 28.9492 17.4495C28.4219 18.0655 27.9414 19.0318 27.9414 20.0223C27.9414 20.1672 27.9648 20.3121 27.9766 20.3605C28.0352 20.3725 28.1289 20.3846 28.2227 20.3846ZM25.293 35C26.4297 35 26.9336 34.2149 28.3516 34.2149C29.793 34.2149 30.1094 34.9758 31.375 34.9758C32.6172 34.9758 33.4492 33.7921 34.2344 32.6325C35.1133 31.3039 35.4766 29.9994 35.5 29.939C35.418 29.9148 33.0391 28.9123 33.0391 26.0979C33.0391 23.658 34.9141 22.5588 35.0195 22.4743C33.7773 20.6383 31.8906 20.59 31.375 20.59C29.9805 20.59 28.8438 21.4596 28.1289 21.4596C27.3555 21.4596 26.3359 20.6383 25.1289 20.6383C22.832 20.6383 20.5 22.595 20.5 26.2912C20.5 28.5861 21.3672 31.014 22.4336 32.5842C23.3477 33.9129 24.1445 35 25.293 35Z"
+          fill="black"
+        />
+      </G>
+      <Defs>
+        <Filter
+          id="filter0_d_0_282"
+          x="2"
+          y="6"
+          width="52"
+          height="52"
+          filterUnits="userSpaceOnUse"
+        >
+          <FeFlood floodOpacity="0" result="BackgroundImageFix" />
+          <FeColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <FeOffset dy="4" />
+          <FeGaussianBlur stdDeviation="2" />
+          <FeComposite in2="hardAlpha" operator="out" />
+          <FeColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+          />
+          <FeBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_0_282"
+          />
+          <FeBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_0_282"
+            result="shape"
+          />
+        </Filter>
+        <ClipPath id="clip0_0_282">
+          <Rect width="56" height="56" fill="white" />
+        </ClipPath>
+      </Defs>
+    </Svg>
+  );
+};
+
+export default AppleIcon;
