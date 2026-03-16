@@ -1,11 +1,20 @@
 // Core Types
 export interface User {
-  id: string;
-  name: string;
-  email: string;
-  avatar?: string;
-  createdAt: string;
-  updatedAt: string;
+  usr_id: number;
+  usr_fname: string;
+  usr_lname: string;
+  usr_username: string;
+  usr_email: string;
+  usr_profile: string;
+  usr_profile_img: string;
+  usr_email_verified_at: string | null;
+  usr_provider_id: string | null;
+  usr_login_type: string | null;
+  usr_status: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+  role: string;
 }
 
 export interface Expense {
@@ -40,7 +49,7 @@ export interface GroupMember {
   id: string;
   userId: string;
   groupId: string;
-  role: 'admin' | 'member';
+  role: "admin" | "member";
   joinedAt: string;
   user: User;
 }
@@ -74,20 +83,20 @@ export interface Category {
   isDefault: boolean;
 }
 
-export type ExpenseCategory = 
-  | 'food'
-  | 'transport'
-  | 'entertainment'
-  | 'shopping'
-  | 'bills'
-  | 'health'
-  | 'travel'
-  | 'education'
-  | 'other';
+export type ExpenseCategory =
+  | "food"
+  | "transport"
+  | "entertainment"
+  | "shopping"
+  | "bills"
+  | "health"
+  | "travel"
+  | "education"
+  | "other";
 
-export type SplitType = 'equal' | 'percentage' | 'amount';
+export type SplitType = "equal" | "percentage" | "amount";
 
-export type Currency = 'USD' | 'EUR' | 'GBP' | 'INR' | 'JPY' | 'CAD' | 'AUD';
+export type Currency = "USD" | "EUR" | "GBP" | "INR" | "JPY" | "CAD" | "AUD";
 
 // Navigation Types
 export type RootStackParamList = {
@@ -156,7 +165,7 @@ export interface CreateGroupForm {
 }
 
 // Theme Types
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = "light" | "dark" | "system";
 
 export interface ThemeColors {
   primary: string;

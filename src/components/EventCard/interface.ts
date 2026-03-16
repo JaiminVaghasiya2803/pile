@@ -1,9 +1,10 @@
-import { ViewStyle, TextStyle, ImageStyle, StyleProp } from 'react-native';
-import { EventItem } from '../../services/events';
+import { ViewStyle, TextStyle, ImageStyle, StyleProp } from "react-native";
+import { EventItem } from "../../services/events";
 
 export interface EventCardProps {
   event: EventItem;
-  onToggleFavorite: (eventId: string | number) => void;
+  isFavorite: boolean;
+  onToggleFavorite: (eventDateId: number) => void;
   onPress: (event: EventItem) => void;
 }
 
@@ -12,6 +13,7 @@ export interface EventCardStyles {
   eventImage: StyleProp<ImageStyle>;
   eventContent: StyleProp<ViewStyle>;
   eventHeader: StyleProp<ViewStyle>;
+  eventDateRow: StyleProp<ViewStyle>;
   eventTitle: StyleProp<TextStyle>;
   eventDate: StyleProp<TextStyle>;
   eventLocation: StyleProp<TextStyle>;

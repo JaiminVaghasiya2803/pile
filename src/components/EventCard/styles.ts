@@ -1,7 +1,7 @@
-import { ColorSchemeName } from 'react-native';
-import { EventCardStyles } from './interface';
-import { getThemeColors } from '../../styles/theme';
-import { createUseStyles } from '../../hooks/useStyles';
+import { ColorSchemeName } from "react-native";
+import { EventCardStyles } from "./interface";
+import { getThemeColors } from "../../styles/theme";
+import { createUseStyles } from "../../hooks/useStyles";
 
 export const getStyles = ({
   theme,
@@ -15,7 +15,7 @@ export const getStyles = ({
       backgroundColor: themeColors.surface,
       borderRadius: 12,
       marginBottom: 16,
-      flexDirection: 'row',
+      flexDirection: "row",
       padding: 12,
     },
     eventImage: {
@@ -28,41 +28,49 @@ export const getStyles = ({
       flex: 1,
     },
     eventHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      flexDirection: "row",
+      justifyContent: "space-between",
       marginBottom: 4,
     },
     eventTitle: {
       fontSize: 16,
-      fontWeight: 'bold',
+      fontWeight: "bold",
       color: themeColors.text,
       flex: 1,
     },
-    eventDate: {
-      fontSize: 14,
-      color: themeColors.primary,
-      fontWeight: 'bold',
+    eventDateRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       marginBottom: 2,
     },
+    eventDate: {
+      fontSize: 13,
+      color: themeColors.primary,
+      fontWeight: "bold",
+      flex: 1,
+    },
     eventLocation: {
-      fontSize: 12,
+      fontSize: 11,
       color: themeColors.textSecondary,
-      marginBottom: 2,
+      textAlign: "right",
+      flexShrink: 1,
+      marginLeft: 8,
     },
     eventPrice: {
       fontSize: 14,
       color: themeColors.textSecondary,
-      fontWeight: '500',
+      fontWeight: "500",
     },
     eventFooter: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       marginTop: 8,
     },
     eventTags: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
+      flexDirection: "row",
+      flexWrap: "wrap",
       gap: 6,
       flex: 1,
     },
@@ -77,8 +85,9 @@ export const getStyles = ({
       color: themeColors.textSecondary,
     },
     eventActions: {
-      flexDirection: 'row',
-      gap: 12,
+      flexDirection: "row",
+      gap: 6,
+      alignItems: "center",
     },
     actionButton: {
       padding: 4,

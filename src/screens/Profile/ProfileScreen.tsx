@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from "react";
 import {
   View,
   Text,
@@ -7,8 +7,8 @@ import {
   ScrollView,
   Image,
   Alert,
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Settings,
   Bell,
@@ -17,36 +17,36 @@ import {
   Star,
   ChevronRight,
   User,
-} from 'lucide-react-native';
-import { ProfileScreenProps } from './interface';
-import { useStyles } from './styles';
-import { RootState, AppDispatch } from '../../store';
-import { logout } from '../../store/slices/authSlice';
-import { useTheme } from '../../hooks/useTheme';
-import { SafeAreaView } from 'react-native-safe-area-context';
+} from "lucide-react-native";
+import { ProfileScreenProps } from "./interface";
+import { useStyles } from "./styles";
+import { RootState, AppDispatch } from "../../store";
+import { logout } from "../../store/slices/authSlice";
+import { useTheme } from "../../hooks/useTheme";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MENU_ITEMS = [
   {
     icon: Settings,
-    title: 'Settings',
-    subtitle: 'App preferences and account',
+    title: "Settings",
+    subtitle: "App preferences and account",
   },
   {
     icon: Bell,
-    title: 'Notifications',
-    subtitle: 'Manage your notifications',
+    title: "Notifications",
+    subtitle: "Manage your notifications",
   },
   {
     icon: HelpCircle,
-    title: 'Help & Support',
-    subtitle: 'Get help and contact us',
+    title: "Help & Support",
+    subtitle: "Get help and contact us",
   },
   {
     icon: Shield,
-    title: 'Privacy Policy',
-    subtitle: 'Read our privacy policy',
+    title: "Privacy Policy",
+    subtitle: "Read our privacy policy",
   },
-  { icon: Star, title: 'Rate App', subtitle: 'Rate us on the App Store' },
+  { icon: Star, title: "Rate App", subtitle: "Rate us on the App Store" },
 ];
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
@@ -54,20 +54,20 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   const { user, isAuthenticated } = useSelector(
     (state: RootState) => state.auth,
   );
-  const { favorites } = useSelector((state: RootState) => state.events);
+  const { favoriteIds } = useSelector((state: RootState) => state.events);
 
   const { isDark } = useTheme();
-  const styles = useStyles({ theme: isDark ? 'dark' : 'light' });
+  const styles = useStyles({ theme: isDark ? "dark" : "light" });
 
   const handleLogout = useCallback(() => {
-    Alert.alert('Logout', 'Are you sure you want to logout?', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      { text: "Cancel", style: "cancel" },
       {
-        text: 'Logout',
-        style: 'destructive',
+        text: "Logout",
+        style: "destructive",
         onPress: () => {
           dispatch(logout());
-          navigation.navigate('Auth');
+          navigation.reset({ index: 0, routes: [{ name: "Main" }] });
         },
       },
     ]);
@@ -78,40 +78,53 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   }, [dispatch]);
 
   const handleMenuPress = useCallback((item: string) => {
-    Alert.alert('Menu', `${item} pressed - Not implemented yet`);
+    Alert.alert("Menu", `${item} pressed - Not implemented yet`);
   }, []);
 
-  const iconColor = useMemo(() => (isDark ? '#FFF' : '#666'), [isDark]);
-  const chevronColor = useMemo(() => (isDark ? '#9CA3AF' : '#999'), [isDark]);
+  const iconColor = useMemo(() => (isDark ? "#FFF" : "#666"), [isDark]);
+  const chevronColor = useMemo(() => (isDark ? "#9CA3AF" : "#999"), [isDark]);
+
+  // Derived user display values
+  const displayName = useMemo(() => {
+    if (!user) {
+      return "";
+    }
+    const first = user.usr_fname || "";
+    const last = user.usr_lname || "";
+    return `${first} ${last}`.trim() || user.usr_username || "User";
+  }, [user]);
 
   const profileHeader = useMemo(
     () =>
       user && (
         <View style={styles.profileSection}>
           <View style={styles.avatarContainer}>
-            {user.avatar ? (
-              <Image source={{ uri: user.avatar }} style={styles.avatar} />
+            {user.usr_profile_img ? (
+              <Image
+                source={{ uri: user.usr_profile_img }}
+                style={styles.avatar}
+              />
             ) : (
               <View style={styles.avatarPlaceholder}>
                 <Text style={styles.avatarText}>
-                  {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                  {user.usr_fname?.charAt(0)?.toUpperCase() || "U"}
                 </Text>
               </View>
             )}
           </View>
           <View style={styles.profileInfo}>
-            <Text style={styles.userName}>{user.name || 'User'}</Text>
-            <Text style={styles.userEmail}>{user.email}</Text>
+            <Text style={styles.userName}>{displayName}</Text>
+            <Text style={styles.userEmail}>{user.usr_email}</Text>
             <TouchableOpacity
               style={styles.editButton}
-              onPress={() => handleMenuPress('Edit Profile')}
+              onPress={() => handleMenuPress("Edit Profile")}
             >
               <Text style={styles.editButtonText}>Edit Profile</Text>
             </TouchableOpacity>
           </View>
         </View>
       ),
-    [styles, user, handleMenuPress],
+    [styles, user, displayName, handleMenuPress],
   );
 
   const statsSection = useMemo(
@@ -120,7 +133,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
         <Text style={styles.statsTitle}>Your Activity</Text>
         <View style={styles.statsContainer}>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{favorites.length}</Text>
+            <Text style={styles.statNumber}>{favoriteIds.length}</Text>
             <Text style={styles.statLabel}>Favorites</Text>
           </View>
           <View style={styles.statItem}>
@@ -134,7 +147,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
         </View>
       </View>
     ),
-    [styles, favorites.length],
+    [styles, favoriteIds.length],
   );
 
   const menuSection = useMemo(
@@ -209,7 +222,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {isAuthenticated && user ? (

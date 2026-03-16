@@ -1,5 +1,10 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../../types';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { User } from "../../types";
+import {
+  loginUser as loginUserApi,
+  LoginCredentials,
+} from "../../services/auth";
 
 interface AuthState {
   user: User | null;
@@ -19,46 +24,34 @@ const initialState: AuthState = {
   error: null,
 };
 
-// Async thunks
 export const loginUser = createAsyncThunk(
-  'auth/login',
-  async (credentials: { email: string; password: string }) => {
-    // Simulate API call for development
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock successful login
-    return {
-      user: {
-        id: '1',
-        name: 'Renzo',
-        email: credentials.email,
-        avatar: null,
-      },
-      token: 'mock-jwt-token',
-    };
-  }
-);
+  "auth/login",
+  async (credentials: LoginCredentials, { rejectWithValue }) => {
+    try {
+      const response = await loginUserApi(credentials);
 
-export const registerUser = createAsyncThunk(
-  'auth/register',
-  async (userData: { name: string; email: string; password: string }) => {
-    // Simulate API call for development
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    return {
-      user: {
-        id: '2',
-        name: userData.name,
-        email: userData.email,
-        avatar: null,
-      },
-      token: 'mock-jwt-token',
-    };
-  }
+      if (!response.success) {
+        return rejectWithValue(response.message || "Login failed");
+      }
+
+      const { user, token } = response.data;
+
+      // Persist token in async storage
+      await AsyncStorage.setItem("userToken", token);
+
+      return { user, token };
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Login failed. Please check your credentials.";
+      return rejectWithValue(message);
+    }
+  },
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
@@ -67,6 +60,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.isGuest = false;
       state.error = null;
+      AsyncStorage.removeItem("userToken");
     },
     enterAsGuest: (state) => {
       state.isGuest = true;
@@ -99,22 +93,8 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Login failed';
-      })
-      .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isAuthenticated = true;
-        state.isGuest = false;
-      })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message || 'Registration failed';
+        state.error =
+          (action.payload as string) || action.error.message || "Login failed";
       });
   },
 });

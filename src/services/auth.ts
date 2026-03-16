@@ -1,28 +1,31 @@
-import { useMutation } from '@tanstack/react-query';
-import { apiClient } from './api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useMutation } from "@tanstack/react-query";
+import { apiClient } from "./api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { User } from "../types";
 
 export interface LoginCredentials {
   email: string;
-  password?: string;
+  password: string;
 }
 
-export interface LoginResponse {
-  data?: {
-    token?: string;
-    [key: string]: unknown;
+export interface LoginApiResponse {
+  success: boolean;
+  message: string;
+  data: {
+    user: User;
+    token: string;
   };
-  token?: string;
-  message?: string;
 }
 
-export const loginUser = async (credentials: LoginCredentials) => {
+export const loginUser = async (
+  credentials: LoginCredentials,
+): Promise<LoginApiResponse> => {
   const formData = new FormData();
-  formData.append('email', credentials.email);
-  if (credentials.password) formData.append('password', credentials.password);
+  formData.append("email", credentials.email);
+  formData.append("password", credentials.password);
 
-  const { data } = await apiClient.post<LoginResponse>('/login', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+  const { data } = await apiClient.post<LoginApiResponse>("/login", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
   });
 
   return data;
@@ -31,10 +34,10 @@ export const loginUser = async (credentials: LoginCredentials) => {
 export const useLogin = () =>
   useMutation({
     mutationFn: loginUser,
-    onSuccess: async data => {
-      const token = data?.data?.token || data?.token;
+    onSuccess: async (data) => {
+      const token = data?.data?.token;
       if (token) {
-        await AsyncStorage.setItem('userToken', token);
+        await AsyncStorage.setItem("userToken", token);
       }
     },
   });

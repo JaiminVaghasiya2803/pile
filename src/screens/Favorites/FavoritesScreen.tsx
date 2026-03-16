@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from "react";
 import {
   View,
   Text,
@@ -6,75 +6,93 @@ import {
   TouchableOpacity,
   StatusBar,
   Alert,
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Search } from 'lucide-react-native';
-import { FavoritesScreenProps } from './interface';
-import { useStyles } from './styles';
-import { RootState, AppDispatch } from '../../store';
-import { toggleFavorite } from '../../store/slices/eventsSlice';
-import { logout } from '../../store/slices/authSlice';
-import { useTheme } from '../../hooks/useTheme';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import EventCard from '../../components/EventCard/EventCard';
-import { EventItem } from '../../services/events';
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { Search } from "lucide-react-native";
+import { FavoritesScreenProps } from "./interface";
+import { useStyles } from "./styles";
+import { RootState, AppDispatch } from "../../store";
+import {
+  toggleFavorite,
+  selectIsFavorite,
+} from "../../store/slices/eventsSlice";
+import { logout } from "../../store/slices/authSlice";
+import { useTheme } from "../../hooks/useTheme";
+import { SafeAreaView } from "react-native-safe-area-context";
+import EventCard from "../../components/EventCard/EventCard";
+import { useEventsListing, EventItem } from "../../services/events";
 
 const FavoritesScreen: React.FC<FavoritesScreenProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { favorites } = useSelector((state: RootState) => state.events);
+  const { favoriteIds } = useSelector((state: RootState) => state.events);
   const { user, isGuest } = useSelector((state: RootState) => state.auth);
 
+  // Re-use the events listing so we can filter to favorites
+  const { data } = useEventsListing({});
+
   const { isDark } = useTheme();
-  const styles = useStyles({ theme: isDark ? 'dark' : 'light' });
+  const styles = useStyles({ theme: isDark ? "dark" : "light" });
+
+  // Filter fetched events down to just the favourited ones
+  const favorites: EventItem[] = useMemo(() => {
+    const allEvents = data?.data?.events ?? [];
+    return allEvents.filter((e) => favoriteIds.includes(e.event_date_id));
+  }, [data, favoriteIds]);
 
   const handleToggleFavorite = useCallback(
-    (eventId: string | number) => {
+    (eventDateId: number) => {
       if (isGuest) {
         Alert.alert(
-          'Sign In Required',
-          'Please sign in to save events to your favorites.',
+          "Sign In Required",
+          "Please sign in to save events to your favorites.",
           [
-            { text: 'Cancel', style: 'cancel' },
-            { text: 'Sign In', onPress: () => dispatch(logout()) },
+            { text: "Cancel", style: "cancel" },
+            { text: "Sign In", onPress: () => dispatch(logout()) },
           ],
         );
         return;
       }
-      dispatch(toggleFavorite(String(eventId)));
+      dispatch(toggleFavorite(eventDateId));
     },
     [dispatch, isGuest],
   );
 
   const handleEventPress = useCallback((event: EventItem) => {
-    console.log('Favorite event pressed:', event.title || event.event_name);
+    console.log("Favorite event pressed:", event.event_name);
   }, []);
 
   const renderFavorite = useCallback(
     ({ item }: { item: EventItem }) => (
       <EventCard
         event={item}
+        isFavorite={selectIsFavorite(favoriteIds, item.event_date_id)}
         onToggleFavorite={handleToggleFavorite}
         onPress={handleEventPress}
       />
     ),
-    [handleToggleFavorite, handleEventPress],
+    [handleToggleFavorite, handleEventPress, favoriteIds],
   );
+
+  const displayName = useMemo(() => {
+    if (user) {
+      return user.usr_fname || user.usr_username || "there";
+    }
+    return isGuest ? "Guest" : "there";
+  }, [user, isGuest]);
 
   const headerComponent = useMemo(
     () => (
       <View style={styles.headerContainer}>
         <View style={styles.header}>
-          <Text style={styles.greeting}>
-            Hello {user?.name || (isGuest ? 'Guest' : 'Renzo')}!
-          </Text>
-          <Text style={styles.subtitle}>Are you ready to dance?</Text>
+          <Text style={styles.greeting}>Hello {displayName}!</Text>
+          <Text style={styles.subtitle}>Your saved events</Text>
         </View>
         <TouchableOpacity>
-          <Search size={24} color={isDark ? '#FFF' : '#000'} />
+          <Search size={24} color={isDark ? "#FFF" : "#000"} />
         </TouchableOpacity>
       </View>
     ),
-    [styles, user, isGuest, isDark],
+    [styles, displayName, isDark],
   );
 
   const emptyComponent = useMemo(
@@ -82,8 +100,8 @@ const FavoritesScreen: React.FC<FavoritesScreenProps> = () => {
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyText}>
           {isGuest
-            ? 'Sign in to save your favorite events!'
-            : 'No favorites yet'}
+            ? "Sign in to save your favorite events!"
+            : "No favorites yet. Tap the ♥ on any event to save it!"}
         </Text>
         {isGuest && (
           <TouchableOpacity
@@ -101,11 +119,9 @@ const FavoritesScreen: React.FC<FavoritesScreenProps> = () => {
   const listComponent = useMemo(
     () => (
       <FlatList
-        data={favorites as unknown as EventItem[]}
+        data={favorites}
         renderItem={renderFavorite}
-        keyExtractor={(item, index) =>
-          item.id ? item.id.toString() : index.toString()
-        }
+        keyExtractor={(item) => item.event_date_id.toString()}
         contentContainerStyle={styles.favoritesList}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={emptyComponent}
@@ -116,12 +132,8 @@ const FavoritesScreen: React.FC<FavoritesScreenProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-
-      {/* Header */}
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
       {headerComponent}
-
-      {/* Favorites List */}
       {listComponent}
     </SafeAreaView>
   );

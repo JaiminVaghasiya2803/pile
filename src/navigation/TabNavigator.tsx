@@ -1,30 +1,32 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 import {
   createBottomTabNavigator,
   BottomTabBarProps,
-} from '@react-navigation/bottom-tabs';
+} from "@react-navigation/bottom-tabs";
 import {
   View,
   Text,
   TouchableOpacity,
+  Alert,
   ViewStyle,
   TextStyle,
   ColorSchemeName,
   StyleProp,
-} from 'react-native';
-import { Search, Calendar, Heart, User } from 'lucide-react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { setActiveTab } from '../store/slices/uiSlice';
-import { useTheme } from '../hooks/useTheme';
-import { createUseStyles } from '../hooks/useStyles';
-import { getThemeColors } from '../styles/theme';
+} from "react-native";
+import { Search, Calendar, Heart, User } from "lucide-react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { setActiveTab } from "../store/slices/uiSlice";
+import { logout } from "../store/slices/authSlice";
+import { useTheme } from "../hooks/useTheme";
+import { createUseStyles } from "../hooks/useStyles";
+import { getThemeColors } from "../styles/theme";
 
-import EventsScreen from '../screens/Events/EventsScreen';
-import FavoritesScreen from '../screens/Favorites/FavoritesScreen';
-import SearchScreen from '../screens/Search/SearchScreen';
-import ProfileScreen from '../screens/Profile/ProfileScreen';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import EventsScreen from "../screens/Events/EventsScreen";
+import FavoritesScreen from "../screens/Favorites/FavoritesScreen";
+import SearchScreen from "../screens/Search/SearchScreen";
+import ProfileScreen from "../screens/Profile/ProfileScreen";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export type TabParamList = {
   Search: undefined;
@@ -53,15 +55,15 @@ const getStyles = ({ theme }: { theme: ColorSchemeName }): TabBarStyles => {
       borderTopColor: themeColors.border,
     },
     tabBar: {
-      flexDirection: 'row',
+      flexDirection: "row",
       height: 60,
       backgroundColor: themeColors.background,
-      alignItems: 'center',
+      alignItems: "center",
     },
     tabButton: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
     },
     tabButtonText: {
       fontSize: 10,
@@ -70,30 +72,30 @@ const getStyles = ({ theme }: { theme: ColorSchemeName }): TabBarStyles => {
     },
     tabButtonTextActive: {
       color: themeColors.text,
-      fontWeight: 'bold',
+      fontWeight: "bold",
     },
     badge: {
-      position: 'absolute',
+      position: "absolute",
       top: -4,
       right: -8,
-      backgroundColor: '#FF3B30',
+      backgroundColor: "#FF3B30",
       borderRadius: 9,
       minWidth: 18,
       height: 18,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       paddingHorizontal: 4,
       borderWidth: 1.5,
       borderColor: themeColors.background,
     },
     badgeText: {
-      color: '#FFFFFF',
+      color: "#FFFFFF",
       fontSize: 10,
-      fontWeight: 'bold',
+      fontWeight: "bold",
       lineHeight: 14,
     },
     iconWrapper: {
-      position: 'relative',
+      position: "relative",
     },
   };
 };
@@ -105,11 +107,15 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
   const dispatch = useDispatch();
   const { isDark } = useTheme();
-  const styles = useStyles({ theme: isDark ? 'dark' : 'light' });
-  const themeColors = getThemeColors(isDark ? 'dark' : 'light');
-  const favoritesCount = useSelector(
-    (rootState: RootState) => rootState.events.favorites.length,
+  const styles = useStyles({ theme: isDark ? "dark" : "light" });
+  const themeColors = getThemeColors(isDark ? "dark" : "light");
+  const { isAuthenticated, isGuest } = useSelector(
+    (rootState: RootState) => rootState.auth,
   );
+  const favoritesCount = useSelector(
+    (rootState: RootState) => rootState.events.favoriteIds.length,
+  );
+  const showFavoritesBadge = !isGuest && isAuthenticated && favoritesCount > 0;
 
   const getTabIcon = useCallback(
     (routeName: string, isFocused: boolean) => {
@@ -117,13 +123,13 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
       const size = 24;
 
       switch (routeName) {
-        case 'Search':
+        case "Search":
           return <Search size={size} color={color} />;
-        case 'Events':
+        case "Events":
           return <Calendar size={size} color={color} />;
-        case 'Favorites':
+        case "Favorites":
           return <Heart size={size} color={color} />;
-        case 'Profile':
+        case "Profile":
           return <User size={size} color={color} />;
         default:
           return null;
@@ -138,8 +144,21 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
       const isFocused = state.index === index;
 
       const onPress = () => {
+        // Block Favorites tab for guests
+        if (route.name === "Favorites" && isGuest) {
+          Alert.alert(
+            "Sign In Required",
+            "Please sign in to access your favourites.",
+            [
+              { text: "Cancel", style: "cancel" },
+              { text: "Sign In", onPress: () => dispatch(logout()) },
+            ],
+          );
+          return;
+        }
+
         const event = navigation.emit({
-          type: 'tabPress',
+          type: "tabPress",
           target: route.key,
           canPreventDefault: true,
         });
@@ -159,10 +178,10 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
         >
           <View style={styles.iconWrapper}>
             {getTabIcon(route.name, isFocused)}
-            {route.name === 'Favorites' && favoritesCount > 0 && (
+            {route.name === "Favorites" && showFavoritesBadge && (
               <View style={styles.badge}>
                 <Text style={styles.badgeText}>
-                  {favoritesCount > 99 ? '99+' : favoritesCount}
+                  {favoritesCount > 99 ? "99+" : favoritesCount}
                 </Text>
               </View>
             )}
@@ -173,12 +192,12 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
               isFocused && styles.tabButtonTextActive,
             ]}
           >
-            {label === 'Favorites' ? 'Favourites' : label}
+            {label === "Favorites" ? "Favourites" : label}
           </Text>
         </TouchableOpacity>
       );
     },
-    [state.index, navigation, dispatch, styles, getTabIcon, favoritesCount],
+    [state.index, navigation, dispatch, styles, getTabIcon, favoritesCount, isGuest, showFavoritesBadge],
   );
 
   return (
