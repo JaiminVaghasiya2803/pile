@@ -8,7 +8,6 @@ import {
   Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Search } from "lucide-react-native";
 import { FavoritesScreenProps } from "./interface";
 import { useStyles } from "./styles";
 import { RootState, AppDispatch } from "../../store";
@@ -87,9 +86,6 @@ const FavoritesScreen: React.FC<FavoritesScreenProps> = () => {
           <Text style={styles.greeting}>Hello {displayName}!</Text>
           <Text style={styles.subtitle}>Your saved events</Text>
         </View>
-        <TouchableOpacity>
-          <Search size={24} color={isDark ? "#FFF" : "#000"} />
-        </TouchableOpacity>
       </View>
     ),
     [styles, displayName, isDark],

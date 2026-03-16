@@ -3,14 +3,12 @@ import {
   View,
   Text,
   FlatList,
-  TouchableOpacity,
   StatusBar,
   ActivityIndicator,
   Alert,
   RefreshControl,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Search } from "lucide-react-native";
 import { EventsScreenProps } from "./interface";
 import { useStyles } from "./styles";
 import { RootState, AppDispatch } from "../../store";

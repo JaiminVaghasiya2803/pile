@@ -31,8 +31,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const styles = useStyles({ theme: isDark ? "dark" : "light" });
 
   const [formData, setFormData] = useState<LoginFormData>({
-    email: "",
-    password: "",
+    email: "testpracticaluser001@mailinator.com",
+    password: "Test@123",
   });
   const [showPassword, setShowPassword] = useState(false);
 
