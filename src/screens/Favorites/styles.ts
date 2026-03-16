@@ -1,14 +1,10 @@
-import { ColorSchemeName } from "react-native";
-import { FavoritesStyles } from "./interface";
-import { getThemeColors } from "../../styles/theme";
-import { createUseStyles } from "../../hooks/useStyles";
-import { fonts } from "../../styles/fonts";
+import { ColorSchemeName } from 'react-native';
+import { FavoritesStyles } from './interface';
+import { getThemeColors } from '../../styles/theme';
+import { createUseStyles } from '../../hooks/useStyles';
+import { fonts } from '../../styles/fonts';
 
-export const getStyles = ({
-  theme,
-}: {
-  theme: ColorSchemeName;
-}): FavoritesStyles => {
+export const getStyles = ({ theme }: { theme: ColorSchemeName }): FavoritesStyles => {
   const themeColors = getThemeColors(theme);
 
   return {
@@ -17,9 +13,9 @@ export const getStyles = ({
       backgroundColor: themeColors.background,
     },
     headerContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       paddingRight: 20,
       backgroundColor: themeColors.surface,
       marginBottom: 33,
@@ -32,7 +28,7 @@ export const getStyles = ({
     greeting: {
       fontFamily: fonts.bold,
       fontSize: 28,
-      fontWeight: "bold",
+      fontWeight: 'bold',
       color: themeColors.text,
       marginBottom: 4,
     },
@@ -66,8 +62,8 @@ export const getStyles = ({
     arrowButton: {},
     emptyContainer: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
       paddingTop: 100,
     },
     emptyText: {
@@ -83,16 +79,16 @@ export const getStyles = ({
     tabButtonTextActive: {},
     signInButton: {
       marginTop: 20,
-      backgroundColor: "#21D393",
+      backgroundColor: '#21D393',
       paddingHorizontal: 30,
       paddingVertical: 12,
       borderRadius: 12,
     },
     signInButtonText: {
       fontFamily: fonts.bold,
-      color: "#FFFFFF",
+      color: '#FFFFFF',
       fontSize: 16,
-      fontWeight: "bold",
+      fontWeight: 'bold',
     },
   };
 };

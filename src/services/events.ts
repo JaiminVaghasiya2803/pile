@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { apiClient } from "./api";
+import { useQuery } from '@tanstack/react-query';
+import { apiClient } from './api';
 
 export interface DanceStyle {
   ds_id: number;
@@ -38,16 +38,13 @@ export interface EventsListingResponse {
 }
 
 export const fetchEvents = async (filters: Record<string, unknown> = {}) => {
-  const { data } = await apiClient.post<EventsListingResponse>(
-    "/events-listing",
-    filters,
-  );
+  const { data } = await apiClient.post<EventsListingResponse>('/events-listing', filters);
   return data;
 };
 
 export const useEventsListing = (filters: Record<string, unknown> = {}) => {
   return useQuery({
-    queryKey: ["events", filters],
+    queryKey: ['events', filters],
     queryFn: () => fetchEvents(filters),
   });
 };

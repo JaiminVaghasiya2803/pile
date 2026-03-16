@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect } from "react";
+import React, { useCallback, useMemo, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,67 +7,54 @@ import {
   ActivityIndicator,
   Alert,
   RefreshControl,
-} from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { EventsScreenProps } from "./interface";
-import { useStyles } from "./styles";
-import { RootState, AppDispatch } from "../../store";
-import { useTheme } from "../../hooks/useTheme";
-import {
-  toggleFavorite,
-  selectIsFavorite,
-} from "../../store/slices/eventsSlice";
-import { logout } from "../../store/slices/authSlice";
-import { useEventsListing, EventItem } from "../../services/events";
-import { SafeAreaView } from "react-native-safe-area-context";
-import EventCard from "../../components/EventCard/EventCard";
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { EventsScreenProps } from './interface';
+import { useStyles } from './styles';
+import { RootState, AppDispatch } from '../../store';
+import { useTheme } from '../../hooks/useTheme';
+import { toggleFavorite, selectIsFavorite } from '../../store/slices/eventsSlice';
+import { logout } from '../../store/slices/authSlice';
+import { useEventsListing, EventItem } from '../../services/events';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import EventCard from '../../components/EventCard/EventCard';
 
 const EventsScreen: React.FC<EventsScreenProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user, isGuest } = useSelector((state: RootState) => state.auth);
   const { favoriteIds } = useSelector((state: RootState) => state.events);
 
-  const {
-    data,
-    isLoading: isApiLoading,
-    isError,
-    refetch,
-    isRefetching,
-  } = useEventsListing({});
+  const { data, isLoading: isApiLoading, isError, refetch, isRefetching } = useEventsListing({});
 
   useEffect(() => {
     if (isError) {
       Alert.alert(
-        "Connection Error",
-        "Could not fetch the latest events. Please check your internet connection.",
-        [{ text: "OK" }],
+        'Connection Error',
+        'Could not fetch the latest events. Please check your internet connection.',
+        [{ text: 'OK' }]
       );
     }
   }, [isError]);
 
   const { isDark } = useTheme();
-  const styles = useStyles({ theme: isDark ? "dark" : "light" });
+  const styles = useStyles({ theme: isDark ? 'dark' : 'light' });
 
   const handleToggleFavorite = useCallback(
     (eventDateId: number) => {
       if (isGuest) {
-        Alert.alert(
-          "Sign In Required",
-          "Please sign in to save events to your favorites.",
-          [
-            { text: "Cancel", style: "cancel" },
-            { text: "Sign In", onPress: () => dispatch(logout()) },
-          ],
-        );
+        Alert.alert('Sign In Required', 'Please sign in to save events to your favorites.', [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Sign In', onPress: () => dispatch(logout()) },
+        ]);
         return;
       }
       dispatch(toggleFavorite(eventDateId));
     },
-    [dispatch, isGuest],
+    [dispatch, isGuest]
   );
 
   const handleEventPress = useCallback((event: EventItem) => {
-    console.log("Event pressed:", event.event_name);
+    console.log('Event pressed:', event.event_name);
   }, []);
 
   const events: EventItem[] = useMemo(() => {
@@ -83,14 +70,14 @@ const EventsScreen: React.FC<EventsScreenProps> = () => {
         onPress={handleEventPress}
       />
     ),
-    [handleToggleFavorite, handleEventPress, favoriteIds],
+    [handleToggleFavorite, handleEventPress, favoriteIds]
   );
 
   const displayName = useMemo(() => {
     if (user) {
-      return user.usr_fname || user.usr_username || "there";
+      return user.usr_fname || user.usr_username || 'there';
     }
-    return isGuest ? "Guest" : "there";
+    return isGuest ? 'Guest' : 'there';
   }, [user, isGuest]);
 
   const headerComponent = useMemo(
@@ -102,7 +89,7 @@ const EventsScreen: React.FC<EventsScreenProps> = () => {
         </View>
       </View>
     ),
-    [styles, displayName, isDark],
+    [styles, displayName]
   );
 
   const emptyComponent = useMemo(
@@ -111,7 +98,7 @@ const EventsScreen: React.FC<EventsScreenProps> = () => {
         <Text style={styles.emptyText}>No events found</Text>
       </View>
     ),
-    [styles.emptyContainer, styles.emptyText],
+    [styles.emptyContainer, styles.emptyText]
   );
 
   const loadingComponent = useMemo(
@@ -123,7 +110,7 @@ const EventsScreen: React.FC<EventsScreenProps> = () => {
         </View>
       </SafeAreaView>
     ),
-    [styles],
+    [styles]
   );
 
   const listComponent = useMemo(
@@ -131,7 +118,7 @@ const EventsScreen: React.FC<EventsScreenProps> = () => {
       <FlatList
         data={events}
         renderItem={renderEvent}
-        keyExtractor={(item) => item.event_date_id.toString()}
+        keyExtractor={item => item.event_date_id.toString()}
         style={styles.listContainer}
         contentContainerStyle={styles.eventsList}
         showsVerticalScrollIndicator={false}
@@ -141,7 +128,7 @@ const EventsScreen: React.FC<EventsScreenProps> = () => {
             refreshing={isRefetching}
             onRefresh={refetch}
             tintColor="#21D393"
-            colors={["#21D393"]}
+            colors={['#21D393']}
           />
         }
       />
@@ -154,7 +141,7 @@ const EventsScreen: React.FC<EventsScreenProps> = () => {
       emptyComponent,
       isRefetching,
       refetch,
-    ],
+    ]
   );
 
   if (isApiLoading && events.length === 0) {
@@ -163,7 +150,7 @@ const EventsScreen: React.FC<EventsScreenProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
       {headerComponent}
       {listComponent}
     </SafeAreaView>

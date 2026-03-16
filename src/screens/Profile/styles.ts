@@ -4,11 +4,7 @@ import { getThemeColors } from '../../styles/theme';
 import { createUseStyles } from '../../hooks/useStyles';
 import { fonts } from '../../styles/fonts';
 
-export const getStyles = ({
-  theme,
-}: {
-  theme: ColorSchemeName;
-}): ProfileStyles => {
+export const getStyles = ({ theme }: { theme: ColorSchemeName }): ProfileStyles => {
   const themeColors = getThemeColors(theme);
 
   return {

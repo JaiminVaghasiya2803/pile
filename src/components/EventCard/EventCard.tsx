@@ -1,20 +1,15 @@
-import React, { useMemo, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { ArrowRight, Heart, Music } from "lucide-react-native";
-import { ShareIcon } from "../Icons";
-import { EventCardProps } from "./interface";
-import { useStyles } from "./styles";
-import { useTheme } from "../../hooks/useTheme";
-import { formatEventPrice } from "../../store/slices/eventsSlice";
+import React, { useMemo, useState } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { ArrowRight, Heart, Music } from 'lucide-react-native';
+import { ShareIcon } from '../Icons';
+import { EventCardProps } from './interface';
+import { useStyles } from './styles';
+import { useTheme } from '../../hooks/useTheme';
+import { formatEventPrice } from '../../store/slices/eventsSlice';
 
-const EventCard: React.FC<EventCardProps> = ({
-  event,
-  onToggleFavorite,
-  onPress,
-  isFavorite,
-}) => {
+const EventCard: React.FC<EventCardProps> = ({ event, onToggleFavorite, onPress, isFavorite }) => {
   const { isDark } = useTheme();
-  const styles = useStyles({ theme: isDark ? "dark" : "light" });
+  const styles = useStyles({ theme: isDark ? 'dark' : 'light' });
 
   const [imageError, setImageError] = useState(false);
 
@@ -22,18 +17,18 @@ const EventCard: React.FC<EventCardProps> = ({
     return event.event_profile_img || null;
   }, [event.event_profile_img]);
 
-  const iconColor = isDark ? "#FFF" : "#000";
+  const iconColor = isDark ? '#FFF' : '#000';
 
   const locationText = useMemo(() => {
     const parts = [event.city, event.country].filter(Boolean);
-    return parts.join(", ");
+    return parts.join(', ');
   }, [event.city, event.country]);
 
   const dateText = useMemo(() => {
     if (event.readable_from_date && event.readable_to_date) {
       return `${event.readable_from_date} – ${event.readable_to_date}`;
     }
-    return event.readable_from_date || "";
+    return event.readable_from_date || '';
   }, [event.readable_from_date, event.readable_to_date]);
 
   const priceText = useMemo(() => formatEventPrice(event), [event]);
@@ -44,7 +39,7 @@ const EventCard: React.FC<EventCardProps> = ({
       return event.keywords.slice(0, 3);
     }
     if (event.danceStyles && event.danceStyles.length > 0) {
-      return event.danceStyles.map((ds) => ds.ds_name).slice(0, 3);
+      return event.danceStyles.map(ds => ds.ds_name).slice(0, 3);
     }
     return [];
   }, [event.keywords, event.danceStyles]);
@@ -60,7 +55,7 @@ const EventCard: React.FC<EventCardProps> = ({
         />
       ) : (
         <View style={styles.eventImagePlaceholder}>
-          <Music size={28} color={isDark ? "#555" : "#CCC"} />
+          <Music size={28} color={isDark ? '#555' : '#CCC'} />
         </View>
       )}
       <View style={styles.eventContent}>
@@ -101,8 +96,8 @@ const EventCard: React.FC<EventCardProps> = ({
             >
               <Heart
                 size={24}
-                color={isFavorite ? "#21D393" : iconColor}
-                fill={isFavorite ? "#21D393" : "none"}
+                color={isFavorite ? '#21D393' : iconColor}
+                fill={isFavorite ? '#21D393' : 'none'}
               />
             </TouchableOpacity>
           </View>

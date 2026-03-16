@@ -1,14 +1,10 @@
-import { ColorSchemeName } from "react-native";
-import { LoginStyles } from "./interface";
-import { getThemeColors } from "../../styles/theme";
-import { createUseStyles } from "../../hooks/useStyles";
-import { fonts } from "../../styles/fonts";
+import { ColorSchemeName } from 'react-native';
+import { LoginStyles } from './interface';
+import { getThemeColors } from '../../styles/theme';
+import { createUseStyles } from '../../hooks/useStyles';
+import { fonts } from '../../styles/fonts';
 
-export const getStyles = ({
-  theme,
-}: {
-  theme: ColorSchemeName;
-}): LoginStyles => {
+export const getStyles = ({ theme }: { theme: ColorSchemeName }): LoginStyles => {
   const themeColors = getThemeColors(theme);
 
   return {
@@ -24,22 +20,22 @@ export const getStyles = ({
     scrollCard: {
       flex: 1,
       backgroundColor: themeColors.surface,
-      shadowColor: "#000",
+      shadowColor: '#000',
       shadowOffset: { width: 0, height: -4 },
       shadowOpacity: 0.06,
       shadowRadius: 12,
       elevation: 8,
-      overflow: "hidden",
+      overflow: 'hidden',
     },
     logoContainer: {
-      alignItems: "center",
+      alignItems: 'center',
       marginTop: 20,
       marginBottom: 10,
     },
     logoText: {
       fontFamily: fonts.bold,
       fontSize: 42,
-      fontWeight: "bold",
+      fontWeight: 'bold',
       color: themeColors.text,
       marginBottom: 20,
     },
@@ -48,11 +44,11 @@ export const getStyles = ({
       height: 100,
       backgroundColor: themeColors.surface,
       borderRadius: 12,
-      overflow: "hidden",
+      overflow: 'hidden',
     },
     logoImage: {
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     },
     formContainer: {},
     inputContainer: {
@@ -79,13 +75,13 @@ export const getStyles = ({
       elevation: 5,
     },
     passwordContainer: {
-      position: "relative",
+      position: 'relative',
     },
     passwordInput: {
       paddingRight: 50,
     },
     eyeIcon: {
-      position: "absolute",
+      position: 'absolute',
       right: 16,
       top: 14,
     },
@@ -93,32 +89,32 @@ export const getStyles = ({
       fontFamily: fonts.regular,
       fontSize: 14,
       color: themeColors.textSecondary,
-      textAlign: "right",
+      textAlign: 'right',
       marginTop: 8,
     },
     signInButton: {
       backgroundColor: themeColors.primary,
       borderRadius: 4,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
       paddingHorizontal: 24,
       paddingVertical: 8,
       marginBottom: 15,
     },
     signInButtonText: {
       fontFamily: fonts.bold,
-      color: "#FFF",
+      color: '#FFF',
       fontSize: 16,
-      fontWeight: "700",
+      fontWeight: '700',
     },
     actionContainer: {
-      alignItems: "flex-end",
+      alignItems: 'flex-end',
       marginTop: 20,
       marginBottom: 30,
     },
     signUpContainer: {
-      flexDirection: "row",
-      justifyContent: "center",
+      flexDirection: 'row',
+      justifyContent: 'center',
       marginBottom: 30,
     },
     signUpText: {
@@ -130,11 +126,11 @@ export const getStyles = ({
       fontFamily: fonts.bold,
       fontSize: 12,
       color: themeColors.black,
-      textDecorationLine: "underline",
+      textDecorationLine: 'underline',
     },
     dividerContainer: {
-      flexDirection: "row",
-      alignItems: "center",
+      flexDirection: 'row',
+      alignItems: 'center',
       marginBottom: 30,
     },
     dividerLine: {
@@ -149,17 +145,17 @@ export const getStyles = ({
       fontSize: 14,
     },
     socialContainer: {
-      flexDirection: "row",
-      justifyContent: "center",
+      flexDirection: 'row',
+      justifyContent: 'center',
       gap: 17,
       marginBottom: 40,
     },
     socialButton: {
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     guestContainer: {
-      alignItems: "flex-end",
+      alignItems: 'flex-end',
       paddingBottom: 20,
     },
     guestText: {

@@ -49,7 +49,7 @@ export interface GroupMember {
   id: string;
   userId: string;
   groupId: string;
-  role: "admin" | "member";
+  role: 'admin' | 'member';
   joinedAt: string;
   user: User;
 }
@@ -84,19 +84,19 @@ export interface Category {
 }
 
 export type ExpenseCategory =
-  | "food"
-  | "transport"
-  | "entertainment"
-  | "shopping"
-  | "bills"
-  | "health"
-  | "travel"
-  | "education"
-  | "other";
+  | 'food'
+  | 'transport'
+  | 'entertainment'
+  | 'shopping'
+  | 'bills'
+  | 'health'
+  | 'travel'
+  | 'education'
+  | 'other';
 
-export type SplitType = "equal" | "percentage" | "amount";
+export type SplitType = 'equal' | 'percentage' | 'amount';
 
-export type Currency = "USD" | "EUR" | "GBP" | "INR" | "JPY" | "CAD" | "AUD";
+export type Currency = 'USD' | 'EUR' | 'GBP' | 'INR' | 'JPY' | 'CAD' | 'AUD';
 
 // Navigation Types
 export type RootStackParamList = {
@@ -165,7 +165,7 @@ export interface CreateGroupForm {
 }
 
 // Theme Types
-export type ThemeMode = "light" | "dark" | "system";
+export type ThemeMode = 'light' | 'dark' | 'system';
 
 export interface ThemeColors {
   primary: string;

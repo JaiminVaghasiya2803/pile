@@ -50,21 +50,9 @@ const AppleIcon: React.FC<IconProps> = ({ width = 56, height = 56 }) => {
           <FeOffset dy="4" />
           <FeGaussianBlur stdDeviation="2" />
           <FeComposite in2="hardAlpha" operator="out" />
-          <FeColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-          />
-          <FeBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_0_282"
-          />
-          <FeBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_0_282"
-            result="shape"
-          />
+          <FeColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+          <FeBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_282" />
+          <FeBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_282" result="shape" />
         </Filter>
         <ClipPath id="clip0_0_282">
           <Rect width="56" height="56" fill="white" />

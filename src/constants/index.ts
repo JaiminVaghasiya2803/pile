@@ -1,6 +1,11 @@
 import { ExpenseCategory, Currency } from '../types';
 
-export const EXPENSE_CATEGORIES: { id: ExpenseCategory; name: string; icon: string; color: string }[] = [
+export const EXPENSE_CATEGORIES: {
+  id: ExpenseCategory;
+  name: string;
+  icon: string;
+  color: string;
+}[] = [
   { id: 'food', name: 'Food & Dining', icon: '🍽️', color: '#FF6B6B' },
   { id: 'transport', name: 'Transportation', icon: '🚗', color: '#4ECDC4' },
   { id: 'entertainment', name: 'Entertainment', icon: '🎬', color: '#45B7D1' },
@@ -23,9 +28,21 @@ export const CURRENCIES: { code: Currency; name: string; symbol: string }[] = [
 ];
 
 export const GROUP_COLORS = [
-  '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
-  '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
-  '#F8C471', '#82E0AA', '#AED6F1', '#F1948A', '#D7BDE2'
+  '#FF6B6B',
+  '#4ECDC4',
+  '#45B7D1',
+  '#96CEB4',
+  '#FFEAA7',
+  '#DDA0DD',
+  '#98D8C8',
+  '#F7DC6F',
+  '#BB8FCE',
+  '#85C1E9',
+  '#F8C471',
+  '#82E0AA',
+  '#AED6F1',
+  '#F1948A',
+  '#D7BDE2',
 ];
 
 export const API_ENDPOINTS = {

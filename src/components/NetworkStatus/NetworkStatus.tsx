@@ -55,9 +55,7 @@ const NetworkStatus: React.FC = () => {
         </Text>
         {pendingMutationsCount > 0 && (
           <View style={styles.badge}>
-            <Text style={styles.badgeText}>
-              {pendingMutationsCount} pending
-            </Text>
+            <Text style={styles.badgeText}>{pendingMutationsCount} pending</Text>
           </View>
         )}
       </View>

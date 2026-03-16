@@ -1,14 +1,10 @@
-import { ColorSchemeName } from "react-native";
-import { EventCardStyles } from "./interface";
-import { getThemeColors } from "../../styles/theme";
-import { createUseStyles } from "../../hooks/useStyles";
-import { fonts } from "../../styles/fonts";
+import { ColorSchemeName } from 'react-native';
+import { EventCardStyles } from './interface';
+import { getThemeColors } from '../../styles/theme';
+import { createUseStyles } from '../../hooks/useStyles';
+import { fonts } from '../../styles/fonts';
 
-export const getStyles = ({
-  theme,
-}: {
-  theme: ColorSchemeName;
-}): EventCardStyles => {
+export const getStyles = ({ theme }: { theme: ColorSchemeName }): EventCardStyles => {
   const themeColors = getThemeColors(theme);
 
   return {
@@ -16,7 +12,7 @@ export const getStyles = ({
       backgroundColor: themeColors.surface,
       borderRadius: 12,
       marginBottom: 16,
-      flexDirection: "row",
+      flexDirection: 'row',
       padding: 12,
     },
     eventImage: {
@@ -31,42 +27,42 @@ export const getStyles = ({
       borderRadius: 8,
       marginRight: 12,
       backgroundColor: themeColors.border,
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     eventContent: {
       flex: 1,
     },
     eventHeader: {
-      flexDirection: "row",
-      justifyContent: "space-between",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       marginBottom: 4,
     },
     eventTitle: {
       fontFamily: fonts.bold,
       fontSize: 16,
-      fontWeight: "bold",
+      fontWeight: 'bold',
       color: themeColors.text,
       flex: 1,
     },
     eventDateRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       marginBottom: 2,
     },
     eventDate: {
       fontFamily: fonts.bold,
       fontSize: 13,
       color: themeColors.primary,
-      fontWeight: "bold",
+      fontWeight: 'bold',
       flex: 1,
     },
     eventLocation: {
       fontFamily: fonts.regular,
       fontSize: 11,
       color: themeColors.textSecondary,
-      textAlign: "right",
+      textAlign: 'right',
       flexShrink: 1,
       marginLeft: 8,
     },
@@ -74,17 +70,17 @@ export const getStyles = ({
       fontFamily: fonts.medium,
       fontSize: 14,
       color: themeColors.textSecondary,
-      fontWeight: "500",
+      fontWeight: '500',
     },
     eventFooter: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       marginTop: 8,
     },
     eventTags: {
-      flexDirection: "row",
-      flexWrap: "wrap",
+      flexDirection: 'row',
+      flexWrap: 'wrap',
       gap: 6,
       flex: 1,
     },
@@ -100,9 +96,9 @@ export const getStyles = ({
       color: themeColors.textSecondary,
     },
     eventActions: {
-      flexDirection: "row",
+      flexDirection: 'row',
       gap: 6,
-      alignItems: "center",
+      alignItems: 'center',
     },
     actionButton: {
       padding: 4,

@@ -9,7 +9,6 @@ export type MainStackParamList = {
 };
 const Stack = createNativeStackNavigator<MainStackParamList>();
 
-
 const MainStack: React.FC = () => {
   return (
     <Stack.Navigator

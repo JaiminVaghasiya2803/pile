@@ -7,11 +7,7 @@ interface IconProps {
   color?: string;
 }
 
-const ShareIcon: React.FC<IconProps> = ({
-  width = 24,
-  height = 24,
-  color = '#000',
-}) => {
+const ShareIcon: React.FC<IconProps> = ({ width = 24, height = 24, color = '#000' }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path

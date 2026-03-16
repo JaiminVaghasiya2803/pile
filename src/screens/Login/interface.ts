@@ -1,9 +1,8 @@
-import { ViewStyle, TextStyle, ImageStyle, StyleProp } from "react-native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/RootNavigator";
+import { ViewStyle, TextStyle, ImageStyle, StyleProp } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/RootNavigator';
 
-export type LoginScreenNavigationProp =
-  NativeStackNavigationProp<RootStackParamList>;
+export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export interface LoginScreenProps {
   navigation: LoginScreenNavigationProp;

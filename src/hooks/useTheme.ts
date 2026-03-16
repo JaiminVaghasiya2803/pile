@@ -1,10 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import {
-  toggleTheme,
-  setThemeMode,
-  setIsDark,
-} from '../store/slices/themeSlice';
+import { toggleTheme, setThemeMode, setIsDark } from '../store/slices/themeSlice';
 import { lightColors, darkColors } from '../styles/theme';
 
 export const useTheme = () => {
@@ -18,8 +14,7 @@ export const useTheme = () => {
     mode,
     colors,
     toggleTheme: () => dispatch(toggleTheme()),
-    setThemeMode: (newMode: 'light' | 'dark' | 'system') =>
-      dispatch(setThemeMode(newMode)),
+    setThemeMode: (newMode: 'light' | 'dark' | 'system') => dispatch(setThemeMode(newMode)),
     setIsDark: (dark: boolean) => dispatch(setIsDark(dark)),
   };
 };

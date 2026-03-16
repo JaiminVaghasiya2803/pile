@@ -7,7 +7,7 @@ import React from 'react';
  * @returns A hook that takes a context and returns memoized styles.
  */
 export const createUseStyles = <TContext extends object, TStyles>(
-  getStyles: (context: TContext) => TStyles,
+  getStyles: (context: TContext) => TStyles
 ): ((context: TContext) => TStyles) => {
   return (context: TContext) => {
     // relies on getStyles function you pass it to select the styles

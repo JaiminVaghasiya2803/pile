@@ -32,7 +32,7 @@ const uiSlice = createSlice({
     setActiveTab: (state, action: PayloadAction<string>) => {
       state.activeTab = action.payload;
     },
-    hideSplash: (state) => {
+    hideSplash: state => {
       state.showSplash = false;
     },
     addNotification: (state, action: PayloadAction<Omit<Notification, 'id' | 'timestamp'>>) => {
@@ -46,7 +46,7 @@ const uiSlice = createSlice({
     removeNotification: (state, action: PayloadAction<string>) => {
       state.notifications = state.notifications.filter(n => n.id !== action.payload);
     },
-    clearNotifications: (state) => {
+    clearNotifications: state => {
       state.notifications = [];
     },
   },

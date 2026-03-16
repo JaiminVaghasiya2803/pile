@@ -1,10 +1,6 @@
-import {
-  QueryClient,
-  onlineManager,
-  focusManager,
-} from '@tanstack/react-query';
+import { QueryClient, onlineManager, focusManager } from '@tanstack/react-query';
 import NetInfo from '@react-native-community/netinfo';
-import { AppState, AppStateStatus, Platform } from 'react-native';
+import { AppState, AppStateStatus, Platform, NativeEventSubscription } from 'react-native';
 
 // Synchronize onlineManager with React Native NetInfo
 onlineManager.setEventListener(setOnline => {
@@ -20,7 +16,7 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
-let appStateSubscription: any;
+let appStateSubscription: NativeEventSubscription | null = null;
 
 export const setupQueryClient = () => {
   appStateSubscription = AppState.addEventListener('change', onAppStateChange);

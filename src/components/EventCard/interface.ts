@@ -1,5 +1,5 @@
-import { ViewStyle, TextStyle, ImageStyle, StyleProp } from "react-native";
-import { EventItem } from "../../services/events";
+import { ViewStyle, TextStyle, ImageStyle, StyleProp } from 'react-native';
+import { EventItem } from '../../services/events';
 
 export interface EventCardProps {
   event: EventItem;

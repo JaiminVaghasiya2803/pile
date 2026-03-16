@@ -8,11 +8,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 
 import { store, persistor } from './store';
 import RootNavigator from './navigation/RootNavigator';
-import {
-  queryClient,
-  setupQueryClient,
-  teardownQueryClient,
-} from './services/queryClient';
+import { queryClient, setupQueryClient, teardownQueryClient } from './services/queryClient';
 import NetworkStatus from './components/NetworkStatus/NetworkStatus';
 
 const App: React.FC = () => {
@@ -25,10 +21,7 @@ const App: React.FC = () => {
 
   return (
     <Provider store={store}>
-      <PersistGate
-        loading={<View style={styles.loading} />}
-        persistor={persistor}
-      >
+      <PersistGate loading={<View style={styles.loading} />} persistor={persistor}>
         <QueryClientProvider client={queryClient}>
           <SafeAreaProvider style={styles.container}>
             <NavigationContainer>

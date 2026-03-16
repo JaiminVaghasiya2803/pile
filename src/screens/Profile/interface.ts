@@ -2,8 +2,7 @@ import { ViewStyle, TextStyle, StyleProp, ImageStyle } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
-export type ProfileScreenNavigationProp =
-  NativeStackNavigationProp<RootStackParamList>;
+export type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export interface ProfileScreenProps {
   navigation: ProfileScreenNavigationProp;

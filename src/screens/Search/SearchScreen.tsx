@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,50 +8,40 @@ import {
   ActivityIndicator,
   Alert,
   RefreshControl,
-} from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { Search } from "lucide-react-native";
-import { SearchScreenProps } from "./interface";
-import { useStyles } from "./styles";
-import { RootState, AppDispatch } from "../../store";
-import { useTheme } from "../../hooks/useTheme";
-import {
-  toggleFavorite,
-  setSearchQuery,
-  selectIsFavorite,
-} from "../../store/slices/eventsSlice";
-import { logout } from "../../store/slices/authSlice";
-import { useEventsListing, EventItem } from "../../services/events";
-import { SafeAreaView } from "react-native-safe-area-context";
-import EventCard from "../../components/EventCard/EventCard";
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Search } from 'lucide-react-native';
+import { SearchScreenProps } from './interface';
+import { useStyles } from './styles';
+import { RootState, AppDispatch } from '../../store';
+import { useTheme } from '../../hooks/useTheme';
+import { toggleFavorite, setSearchQuery, selectIsFavorite } from '../../store/slices/eventsSlice';
+import { logout } from '../../store/slices/authSlice';
+import { useEventsListing, EventItem } from '../../services/events';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import EventCard from '../../components/EventCard/EventCard';
 
 const SearchScreen: React.FC<SearchScreenProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { searchQuery, selectedCategory, favoriteIds } = useSelector(
-    (state: RootState) => state.events,
+    (state: RootState) => state.events
   );
   const { isGuest } = useSelector((state: RootState) => state.auth);
 
-  const {
-    data,
-    isLoading: isApiLoading,
-    isError,
-    refetch,
-    isRefetching,
-  } = useEventsListing({});
+  const { data, isLoading: isApiLoading, isError, refetch, isRefetching } = useEventsListing({});
 
   useEffect(() => {
     if (isError) {
       Alert.alert(
-        "Connection Error",
-        "Could not fetch events. Please check your internet connection.",
-        [{ text: "OK" }],
+        'Connection Error',
+        'Could not fetch events. Please check your internet connection.',
+        [{ text: 'OK' }]
       );
     }
   }, [isError]);
 
   const { isDark } = useTheme();
-  const styles = useStyles({ theme: isDark ? "dark" : "light" });
+  const styles = useStyles({ theme: isDark ? 'dark' : 'light' });
 
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
 
@@ -65,21 +55,19 @@ const SearchScreen: React.FC<SearchScreenProps> = () => {
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       filtered = filtered.filter(
-        (event) =>
+        event =>
           event.event_name.toLowerCase().includes(q) ||
-          (event.city || "").toLowerCase().includes(q) ||
-          (event.country || "").toLowerCase().includes(q) ||
-          event.keywords?.some((k) => k.toLowerCase().includes(q)) ||
-          event.danceStyles?.some((ds) => ds.ds_name.toLowerCase().includes(q)),
+          (event.city || '').toLowerCase().includes(q) ||
+          (event.country || '').toLowerCase().includes(q) ||
+          event.keywords?.some(k => k.toLowerCase().includes(q)) ||
+          event.danceStyles?.some(ds => ds.ds_name.toLowerCase().includes(q))
       );
     }
 
     // Filter by dance style / category
-    if (selectedCategory && selectedCategory !== "All") {
-      filtered = filtered.filter((event) =>
-        event.danceStyles?.some(
-          (ds) => ds.ds_name.toLowerCase() === selectedCategory.toLowerCase(),
-        ),
+    if (selectedCategory && selectedCategory !== 'All') {
+      filtered = filtered.filter(event =>
+        event.danceStyles?.some(ds => ds.ds_name.toLowerCase() === selectedCategory.toLowerCase())
       );
     }
 
@@ -91,29 +79,25 @@ const SearchScreen: React.FC<SearchScreenProps> = () => {
       setLocalSearchQuery(text);
       dispatch(setSearchQuery(text));
     },
-    [dispatch],
+    [dispatch]
   );
 
   const handleToggleFavorite = useCallback(
     (eventDateId: number) => {
       if (isGuest) {
-        Alert.alert(
-          "Sign In Required",
-          "Please sign in to save events to your favorites.",
-          [
-            { text: "Cancel", style: "cancel" },
-            { text: "Sign In", onPress: () => dispatch(logout()) },
-          ],
-        );
+        Alert.alert('Sign In Required', 'Please sign in to save events to your favorites.', [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Sign In', onPress: () => dispatch(logout()) },
+        ]);
         return;
       }
       dispatch(toggleFavorite(eventDateId));
     },
-    [dispatch, isGuest],
+    [dispatch, isGuest]
   );
 
   const handleEventPress = useCallback((event: EventItem) => {
-    console.log("Search result pressed:", event.event_name);
+    console.log('Search result pressed:', event.event_name);
   }, []);
 
   const renderSearchResult = useCallback(
@@ -125,18 +109,18 @@ const SearchScreen: React.FC<SearchScreenProps> = () => {
         onPress={handleEventPress}
       />
     ),
-    [handleToggleFavorite, handleEventPress, favoriteIds],
+    [handleToggleFavorite, handleEventPress, favoriteIds]
   );
 
   const emptyResultComponent = useMemo(
     () => (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyText}>
-          {searchQuery ? "No results found" : "Start searching for events"}
+          {searchQuery ? 'No results found' : 'Start searching for events'}
         </Text>
       </View>
     ),
-    [styles.emptyContainer, styles.emptyText, searchQuery],
+    [styles.emptyContainer, styles.emptyText, searchQuery]
   );
 
   const headerComponent = useMemo(
@@ -156,7 +140,7 @@ const SearchScreen: React.FC<SearchScreenProps> = () => {
         </View>
       </View>
     ),
-    [styles, localSearchQuery, handleSearch],
+    [styles, localSearchQuery, handleSearch]
   );
 
   const resultsComponent = useMemo(() => {
@@ -173,7 +157,7 @@ const SearchScreen: React.FC<SearchScreenProps> = () => {
       <FlatList
         data={filteredEvents}
         renderItem={renderSearchResult}
-        keyExtractor={(item) => item.event_date_id.toString()}
+        keyExtractor={item => item.event_date_id.toString()}
         contentContainerStyle={styles.resultsList}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={emptyResultComponent}
@@ -182,7 +166,7 @@ const SearchScreen: React.FC<SearchScreenProps> = () => {
             refreshing={isRefetching}
             onRefresh={refetch}
             tintColor="#21D393"
-            colors={["#21D393"]}
+            colors={['#21D393']}
           />
         }
       />
@@ -199,7 +183,7 @@ const SearchScreen: React.FC<SearchScreenProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
       {headerComponent}
       {resultsComponent}
     </SafeAreaView>

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EventItem } from "../../services/events";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { EventItem } from '../../services/events';
 
 interface EventsState {
   // Tracks which event_date_ids have been favorited by the user
@@ -14,12 +14,12 @@ const initialState: EventsState = {
   favoriteIds: [],
   isLoading: false,
   error: null,
-  searchQuery: "",
+  searchQuery: '',
   selectedCategory: null,
 };
 
 const eventsSlice = createSlice({
-  name: "events",
+  name: 'events',
   initialState,
   reducers: {
     toggleFavorite: (state, action: PayloadAction<number>) => {
@@ -37,31 +37,25 @@ const eventsSlice = createSlice({
     setSelectedCategory: (state, action: PayloadAction<string | null>) => {
       state.selectedCategory = action.payload;
     },
-    clearError: (state) => {
+    clearError: state => {
       state.error = null;
     },
   },
 });
 
-export const {
-  toggleFavorite,
-  setSearchQuery,
-  setSelectedCategory,
-  clearError,
-} = eventsSlice.actions;
+export const { toggleFavorite, setSearchQuery, setSelectedCategory, clearError } =
+  eventsSlice.actions;
 export default eventsSlice.reducer;
 
 // Selectors
-export const selectIsFavorite = (
-  favoriteIds: number[],
-  eventDateId: number,
-): boolean => favoriteIds.includes(eventDateId);
+export const selectIsFavorite = (favoriteIds: number[], eventDateId: number): boolean =>
+  favoriteIds.includes(eventDateId);
 
 // Helper to get formatted price string from an event
 export const formatEventPrice = (event: EventItem): string => {
   const { event_price_from, event_price_to } = event;
   if (!event_price_from && !event_price_to) {
-    return "Free";
+    return 'Free';
   }
   if (event_price_from === event_price_to) {
     return `€${event_price_from}`;

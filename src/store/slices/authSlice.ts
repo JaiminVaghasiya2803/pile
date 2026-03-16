@@ -1,10 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { User } from "../../types";
-import {
-  loginUser as loginUserApi,
-  LoginCredentials,
-} from "../../services/auth";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from '../../types';
+import { loginUser as loginUserApi, LoginCredentials } from '../../services/auth';
 
 interface AuthState {
   user: User | null;
@@ -25,51 +22,55 @@ const initialState: AuthState = {
 };
 
 export const loginUser = createAsyncThunk(
-  "auth/login",
+  'auth/login',
   async (credentials: LoginCredentials, { rejectWithValue }) => {
     try {
       const response = await loginUserApi(credentials);
 
       if (!response.success) {
-        return rejectWithValue(response.message || "Login failed");
+        return rejectWithValue(response.message || 'Login failed');
       }
 
       const { user, token } = response.data;
 
       // Persist token in async storage
-      await AsyncStorage.setItem("userToken", token);
+      await AsyncStorage.setItem('userToken', token);
 
       return { user, token };
-    } catch (error: any) {
+    } catch (error) {
+      const err = error as {
+        response?: { data?: { message?: string } };
+        message?: string;
+      };
       const message =
-        error?.response?.data?.message ||
-        error?.message ||
-        "Login failed. Please check your credentials.";
+        err?.response?.data?.message ||
+        err?.message ||
+        'Login failed. Please check your credentials.';
       return rejectWithValue(message);
     }
-  },
+  }
 );
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
-    logout: (state) => {
+    logout: state => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
       state.isGuest = false;
       state.error = null;
-      AsyncStorage.removeItem("userToken");
+      AsyncStorage.removeItem('userToken');
     },
-    enterAsGuest: (state) => {
+    enterAsGuest: state => {
       state.isGuest = true;
       state.isAuthenticated = true;
       state.user = null;
       state.token = null;
       state.error = null;
     },
-    clearError: (state) => {
+    clearError: state => {
       state.error = null;
     },
     setUser: (state, action: PayloadAction<User>) => {
@@ -78,9 +79,9 @@ const authSlice = createSlice({
       state.isGuest = false;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginUser.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
@@ -93,8 +94,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error =
-          (action.payload as string) || action.error.message || "Login failed";
+        state.error = (action.payload as string) || action.error.message || 'Login failed';
       });
   },
 });

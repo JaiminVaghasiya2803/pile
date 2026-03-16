@@ -24,5 +24,5 @@ apiClient.interceptors.response.use(
       // Handle token expiration/logout
     }
     return Promise.reject(error);
-  },
+  }
 );

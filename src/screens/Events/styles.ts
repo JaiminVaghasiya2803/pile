@@ -1,14 +1,10 @@
-import { ColorSchemeName } from "react-native";
-import { EventsStyles } from "./interface";
-import { getThemeColors } from "../../styles/theme";
-import { createUseStyles } from "../../hooks/useStyles";
-import { fonts } from "../../styles/fonts";
+import { ColorSchemeName } from 'react-native';
+import { EventsStyles } from './interface';
+import { getThemeColors } from '../../styles/theme';
+import { createUseStyles } from '../../hooks/useStyles';
+import { fonts } from '../../styles/fonts';
 
-export const getStyles = ({
-  theme,
-}: {
-  theme: ColorSchemeName;
-}): EventsStyles => {
+export const getStyles = ({ theme }: { theme: ColorSchemeName }): EventsStyles => {
   const themeColors = getThemeColors(theme);
 
   return {
@@ -17,9 +13,9 @@ export const getStyles = ({
       backgroundColor: themeColors.background,
     },
     headerContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       paddingRight: 20,
       backgroundColor: themeColors.surface,
       marginBottom: 33,
@@ -32,7 +28,7 @@ export const getStyles = ({
     greeting: {
       fontFamily: fonts.bold,
       fontSize: 28,
-      fontWeight: "bold",
+      fontWeight: 'bold',
       color: themeColors.text,
       marginBottom: 4,
     },
@@ -42,8 +38,8 @@ export const getStyles = ({
       color: themeColors.textSecondary,
     },
     searchContainer: {
-      flexDirection: "row",
-      alignItems: "center",
+      flexDirection: 'row',
+      alignItems: 'center',
       backgroundColor: themeColors.surface,
       borderRadius: 12,
       marginHorizontal: 20,
@@ -62,7 +58,7 @@ export const getStyles = ({
       backgroundColor: themeColors.surface,
       borderRadius: 12,
       marginBottom: 16,
-      flexDirection: "row",
+      flexDirection: 'row',
       padding: 12,
     },
     eventImage: {
@@ -75,14 +71,14 @@ export const getStyles = ({
       flex: 1,
     },
     eventHeader: {
-      flexDirection: "row",
-      justifyContent: "space-between",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       marginBottom: 4,
     },
     eventTitle: {
       fontFamily: fonts.bold,
       fontSize: 16,
-      fontWeight: "bold",
+      fontWeight: 'bold',
       color: themeColors.text,
       flex: 1,
     },
@@ -90,7 +86,7 @@ export const getStyles = ({
       fontFamily: fonts.bold,
       fontSize: 14,
       color: themeColors.primary,
-      fontWeight: "bold",
+      fontWeight: 'bold',
       marginBottom: 2,
     },
     eventLocation: {
@@ -103,17 +99,17 @@ export const getStyles = ({
       fontFamily: fonts.medium,
       fontSize: 14,
       color: themeColors.textSecondary,
-      fontWeight: "500",
+      fontWeight: '500',
     },
     eventFooter: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       marginTop: 8,
     },
     eventTags: {
-      flexDirection: "row",
-      flexWrap: "wrap",
+      flexDirection: 'row',
+      flexWrap: 'wrap',
       gap: 6,
       flex: 1,
     },
@@ -129,7 +125,7 @@ export const getStyles = ({
       color: themeColors.textSecondary,
     },
     eventActions: {
-      flexDirection: "row",
+      flexDirection: 'row',
       gap: 12,
     },
     actionButton: {
@@ -142,8 +138,8 @@ export const getStyles = ({
     },
     loadingContainer: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     loadingText: {
       fontFamily: fonts.medium,
@@ -153,8 +149,8 @@ export const getStyles = ({
     },
     emptyContainer: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
       paddingTop: 100,
     },
     emptyText: {
@@ -163,7 +159,7 @@ export const getStyles = ({
       color: themeColors.textSecondary,
     },
     tabBar: {
-      flexDirection: "row",
+      flexDirection: 'row',
       backgroundColor: themeColors.background,
       paddingVertical: 10,
       borderTopWidth: 1,
@@ -171,7 +167,7 @@ export const getStyles = ({
     },
     tabButton: {
       flex: 1,
-      alignItems: "center",
+      alignItems: 'center',
     },
     tabButtonActive: {},
     tabButtonText: {
