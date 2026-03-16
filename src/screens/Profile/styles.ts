@@ -2,6 +2,7 @@ import { ColorSchemeName } from 'react-native';
 import { ProfileStyles } from './interface';
 import { getThemeColors } from '../../styles/theme';
 import { createUseStyles } from '../../hooks/useStyles';
+import { fonts } from '../../styles/fonts';
 
 export const getStyles = ({
   theme,
@@ -52,6 +53,7 @@ export const getStyles = ({
       marginBottom: 12,
     },
     avatarText: {
+      fontFamily: fonts.semiBold,
       fontSize: 32,
       fontWeight: '600',
       color: themeColors.textSecondary,
@@ -60,12 +62,14 @@ export const getStyles = ({
       alignItems: 'center',
     },
     userName: {
+      fontFamily: fonts.semiBold,
       fontSize: 24,
       fontWeight: '600',
       color: themeColors.text,
       marginBottom: 4,
     },
     userEmail: {
+      fontFamily: fonts.regular,
       fontSize: 16,
       color: themeColors.textSecondary,
       marginBottom: 16,
@@ -77,6 +81,7 @@ export const getStyles = ({
       borderRadius: 20,
     },
     editButtonText: {
+      fontFamily: fonts.semiBold,
       fontSize: 14,
       fontWeight: '600',
       color: '#FFFFFF',
@@ -108,11 +113,13 @@ export const getStyles = ({
       marginRight: 16,
     },
     menuText: {
+      fontFamily: fonts.medium,
       fontSize: 16,
       fontWeight: '500',
       color: themeColors.text,
     },
     menuSubtext: {
+      fontFamily: fonts.regular,
       fontSize: 14,
       color: themeColors.textSecondary,
       marginTop: 2,
@@ -138,6 +145,7 @@ export const getStyles = ({
       elevation: 3,
     },
     statsTitle: {
+      fontFamily: fonts.semiBold,
       fontSize: 18,
       fontWeight: '600',
       color: themeColors.text,
@@ -151,12 +159,14 @@ export const getStyles = ({
       alignItems: 'center',
     },
     statNumber: {
+      fontFamily: fonts.bold,
       fontSize: 24,
       fontWeight: '700',
       color: themeColors.primary,
       marginBottom: 4,
     },
     statLabel: {
+      fontFamily: fonts.regular,
       fontSize: 14,
       color: themeColors.textSecondary,
     },
@@ -171,6 +181,7 @@ export const getStyles = ({
       alignItems: 'center',
     },
     logoutButtonText: {
+      fontFamily: fonts.semiBold,
       fontSize: 16,
       fontWeight: '600',
       color: '#FFFFFF',
@@ -189,6 +200,7 @@ export const getStyles = ({
       elevation: 3,
     },
     guestText: {
+      fontFamily: fonts.regular,
       fontSize: 16,
       color: themeColors.textSecondary,
       textAlign: 'center',
@@ -201,6 +213,7 @@ export const getStyles = ({
       paddingVertical: 12,
     },
     loginButtonText: {
+      fontFamily: fonts.semiBold,
       fontSize: 16,
       fontWeight: '600',
       color: '#FFFFFF',

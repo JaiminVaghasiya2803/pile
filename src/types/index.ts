@@ -174,6 +174,7 @@ export interface ThemeColors {
   surface: string;
   text: string;
   textSecondary: string;
+  black: string;
   border: string;
   error: string;
   warning: string;

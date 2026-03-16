@@ -2,6 +2,7 @@ import { ColorSchemeName } from 'react-native';
 import { SearchStyles } from './interface';
 import { getThemeColors } from '../../styles/theme';
 import { createUseStyles } from '../../hooks/useStyles';
+import { fonts } from '../../styles/fonts';
 
 export const getStyles = ({
   theme,
@@ -29,11 +30,13 @@ export const getStyles = ({
       height: 52,
     },
     searchInput: {
+      fontFamily: fonts.regular,
       flex: 1,
       fontSize: 16,
       color: themeColors.text,
     },
     searchInputText: {
+      fontFamily: fonts.regular,
       fontSize: 16,
       color: themeColors.text,
     },
@@ -70,6 +73,7 @@ export const getStyles = ({
       borderColor: themeColors.primary,
     },
     filterButtonText: {
+      fontFamily: fonts.medium,
       fontSize: 14,
       color: themeColors.textSecondary,
       fontWeight: '500',
@@ -77,6 +81,7 @@ export const getStyles = ({
       textAlignVertical: 'center',
     },
     filterButtonTextActive: {
+      fontFamily: fonts.bold,
       color: '#FFFFFF',
       fontWeight: 'bold',
     },
@@ -90,6 +95,7 @@ export const getStyles = ({
       paddingTop: 100,
     },
     emptyText: {
+      fontFamily: fonts.regular,
       fontSize: 16,
       color: themeColors.textSecondary,
     },
@@ -100,6 +106,7 @@ export const getStyles = ({
       alignItems: 'center',
     },
     loadingText: {
+      fontFamily: fonts.medium,
       fontSize: 16,
       color: themeColors.textSecondary,
       marginTop: 10,

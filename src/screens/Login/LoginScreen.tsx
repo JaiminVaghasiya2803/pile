@@ -31,8 +31,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const styles = useStyles({ theme: isDark ? "dark" : "light" });
 
   const [formData, setFormData] = useState<LoginFormData>({
-    email: "testpracticaluser001@mailinator.com",
-    password: "Test@123",
+    email: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -91,10 +91,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const logoSection = useMemo(
     () => (
       <View style={styles.logoContainer}>
-        <Text style={styles.logoText}>Plié</Text>
+        <Text style={styles.logoText}>Pliē</Text>
         <View style={styles.logoPlaceholder}>
           <Image
-            source={{ uri: "https://via.placeholder.com/100?text=LOGO" }}
+            source={require("../../assets/pile_logo.png")}
             style={styles.logoImage}
             resizeMode="contain"
           />
@@ -151,24 +151,22 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
-
-        {/* Sign In Button */}
-        <TouchableOpacity
-          style={styles.signInButton}
-          onPress={handleSignIn}
-          disabled={isLoading}
-        >
-          <Text style={styles.signInButtonText}>
-            {isLoading ? "Signing In..." : "Sign In"}
-          </Text>
-        </TouchableOpacity>
-
-        {/* Sign Up Link */}
-        <View style={styles.signUpContainer}>
-          <Text style={styles.signUpText}>Not a member? </Text>
-          <TouchableOpacity>
-            <Text style={styles.signUpLink}>Sign Up Here</Text>
+        <View style={styles.actionContainer}>
+          <TouchableOpacity
+            style={styles.signInButton}
+            onPress={handleSignIn}
+            disabled={isLoading}
+          >
+            <Text style={styles.signInButtonText}>
+              {isLoading ? "Signing In..." : "Sign In"}
+            </Text>
           </TouchableOpacity>
+          <View style={styles.signUpContainer}>
+            <Text style={styles.signUpText}>Not a member? </Text>
+            <TouchableOpacity>
+              <Text style={styles.signUpLink}>Sign Up Here</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     ),
@@ -233,16 +231,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
-
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        {logoSection}
-        {formSection}
-        {socialSection}
-        {guestSection}
-      </ScrollView>
+      {logoSection}
+      <View style={styles.scrollCard}>
+        <ScrollView
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          {formSection}
+          {socialSection}
+          {guestSection}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

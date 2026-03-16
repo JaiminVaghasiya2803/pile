@@ -2,6 +2,7 @@ import { ColorSchemeName } from 'react-native';
 import { FavoritesStyles } from './interface';
 import { getThemeColors } from '../../styles/theme';
 import { createUseStyles } from '../../hooks/useStyles';
+import { fonts } from '../../styles/fonts';
 
 export const getStyles = ({
   theme,
@@ -27,12 +28,14 @@ export const getStyles = ({
       paddingBottom: 20,
     },
     greeting: {
+      fontFamily: fonts.bold,
       fontSize: 28,
       fontWeight: 'bold',
       color: themeColors.text,
       marginBottom: 4,
     },
     subtitle: {
+      fontFamily: fonts.regular,
       fontSize: 16,
       color: themeColors.textSecondary,
     },
@@ -66,6 +69,7 @@ export const getStyles = ({
       paddingTop: 100,
     },
     emptyText: {
+      fontFamily: fonts.regular,
       fontSize: 16,
       color: themeColors.textSecondary,
     },
@@ -83,6 +87,7 @@ export const getStyles = ({
       borderRadius: 12,
     },
     signInButtonText: {
+      fontFamily: fonts.bold,
       color: '#FFFFFF',
       fontSize: 16,
       fontWeight: 'bold',

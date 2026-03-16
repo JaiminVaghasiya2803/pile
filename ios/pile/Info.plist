@@ -34,7 +34,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -56,5 +56,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>GothicA1-ExtraLight.ttf</string>
+		<string>GothicA1-Regular.ttf</string>
+		<string>GothicA1-Light.ttf</string>
+		<string>GothicA1-Thin.ttf</string>
+		<string>GothicA1-Bold.ttf</string>
+		<string>GothicA1-ExtraBold.ttf</string>
+		<string>GothicA1-Medium.ttf</string>
+		<string>GothicA1-Black.ttf</string>
+		<string>GothicA1-SemiBold.ttf</string>
+	</array>
 </dict>
 </plist>

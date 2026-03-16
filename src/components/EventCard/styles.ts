@@ -2,6 +2,7 @@ import { ColorSchemeName } from "react-native";
 import { EventCardStyles } from "./interface";
 import { getThemeColors } from "../../styles/theme";
 import { createUseStyles } from "../../hooks/useStyles";
+import { fonts } from "../../styles/fonts";
 
 export const getStyles = ({
   theme,
@@ -42,6 +43,7 @@ export const getStyles = ({
       marginBottom: 4,
     },
     eventTitle: {
+      fontFamily: fonts.bold,
       fontSize: 16,
       fontWeight: "bold",
       color: themeColors.text,
@@ -54,12 +56,14 @@ export const getStyles = ({
       marginBottom: 2,
     },
     eventDate: {
+      fontFamily: fonts.bold,
       fontSize: 13,
       color: themeColors.primary,
       fontWeight: "bold",
       flex: 1,
     },
     eventLocation: {
+      fontFamily: fonts.regular,
       fontSize: 11,
       color: themeColors.textSecondary,
       textAlign: "right",
@@ -67,6 +71,7 @@ export const getStyles = ({
       marginLeft: 8,
     },
     eventPrice: {
+      fontFamily: fonts.medium,
       fontSize: 14,
       color: themeColors.textSecondary,
       fontWeight: "500",
@@ -90,6 +95,7 @@ export const getStyles = ({
       borderRadius: 4,
     },
     eventTagText: {
+      fontFamily: fonts.medium,
       fontSize: 12,
       color: themeColors.textSecondary,
     },

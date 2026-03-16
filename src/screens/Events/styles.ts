@@ -2,6 +2,7 @@ import { ColorSchemeName } from 'react-native';
 import { EventsStyles } from './interface';
 import { getThemeColors } from '../../styles/theme';
 import { createUseStyles } from '../../hooks/useStyles';
+import { fonts } from '../../styles/fonts';
 
 export const getStyles = ({
   theme,
@@ -27,12 +28,14 @@ export const getStyles = ({
       paddingBottom: 20,
     },
     greeting: {
+      fontFamily: fonts.bold,
       fontSize: 28,
       fontWeight: 'bold',
       color: themeColors.text,
       marginBottom: 4,
     },
     subtitle: {
+      fontFamily: fonts.regular,
       fontSize: 16,
       color: themeColors.textSecondary,
     },
@@ -75,23 +78,27 @@ export const getStyles = ({
       marginBottom: 4,
     },
     eventTitle: {
+      fontFamily: fonts.bold,
       fontSize: 16,
       fontWeight: 'bold',
       color: themeColors.text,
       flex: 1,
     },
     eventDate: {
+      fontFamily: fonts.bold,
       fontSize: 14,
       color: themeColors.primary,
       fontWeight: 'bold',
       marginBottom: 2,
     },
     eventLocation: {
+      fontFamily: fonts.regular,
       fontSize: 12,
       color: themeColors.textSecondary,
       marginBottom: 2,
     },
     eventPrice: {
+      fontFamily: fonts.medium,
       fontSize: 14,
       color: themeColors.textSecondary,
       fontWeight: '500',
@@ -115,6 +122,7 @@ export const getStyles = ({
       borderRadius: 4,
     },
     eventTagText: {
+      fontFamily: fonts.medium,
       fontSize: 12,
       color: themeColors.textSecondary,
     },
@@ -136,6 +144,7 @@ export const getStyles = ({
       alignItems: 'center',
     },
     loadingText: {
+      fontFamily: fonts.medium,
       fontSize: 16,
       color: themeColors.textSecondary,
       marginTop: 10,
@@ -147,6 +156,7 @@ export const getStyles = ({
       paddingTop: 100,
     },
     emptyText: {
+      fontFamily: fonts.regular,
       fontSize: 16,
       color: themeColors.textSecondary,
     },
@@ -163,6 +173,7 @@ export const getStyles = ({
     },
     tabButtonActive: {},
     tabButtonText: {
+      fontFamily: fonts.medium,
       fontSize: 12,
       color: themeColors.textSecondary,
       marginTop: 4,
