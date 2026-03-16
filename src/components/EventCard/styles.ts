@@ -24,6 +24,15 @@ export const getStyles = ({
       borderRadius: 8,
       marginRight: 12,
     },
+    eventImagePlaceholder: {
+      width: 80,
+      height: 80,
+      borderRadius: 8,
+      marginRight: 12,
+      backgroundColor: themeColors.border,
+      alignItems: "center",
+      justifyContent: "center",
+    },
     eventContent: {
       flex: 1,
     },

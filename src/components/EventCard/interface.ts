@@ -11,6 +11,7 @@ export interface EventCardProps {
 export interface EventCardStyles {
   eventCard: StyleProp<ViewStyle>;
   eventImage: StyleProp<ImageStyle>;
+  eventImagePlaceholder: StyleProp<ViewStyle>;
   eventContent: StyleProp<ViewStyle>;
   eventHeader: StyleProp<ViewStyle>;
   eventDateRow: StyleProp<ViewStyle>;

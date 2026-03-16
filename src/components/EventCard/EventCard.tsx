@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { ArrowRight, Heart } from "lucide-react-native";
+import { ArrowRight, Heart, Music } from "lucide-react-native";
 import { ShareIcon } from "../Icons";
 import { EventCardProps } from "./interface";
 import { useStyles } from "./styles";
@@ -16,13 +16,10 @@ const EventCard: React.FC<EventCardProps> = ({
   const { isDark } = useTheme();
   const styles = useStyles({ theme: isDark ? "dark" : "light" });
 
-  const imageSource = useMemo(() => {
-    if (event.event_profile_img) {
-      return { uri: event.event_profile_img };
-    }
-    return {
-      uri: "https://via.placeholder.com/150/1A1A2E/FFFFFF?text=DANCE",
-    };
+  const [imageError, setImageError] = useState(false);
+
+  const imageUri = useMemo(() => {
+    return event.event_profile_img || null;
   }, [event.event_profile_img]);
 
   const iconColor = isDark ? "#FFF" : "#000";
@@ -54,11 +51,18 @@ const EventCard: React.FC<EventCardProps> = ({
 
   return (
     <TouchableOpacity style={styles.eventCard} onPress={() => onPress(event)}>
-      <Image
-        source={imageSource}
-        style={styles.eventImage}
-        resizeMode="cover"
-      />
+      {imageUri && !imageError ? (
+        <Image
+          source={{ uri: imageUri }}
+          style={styles.eventImage}
+          resizeMode="cover"
+          onError={() => setImageError(true)}
+        />
+      ) : (
+        <View style={styles.eventImagePlaceholder}>
+          <Music size={28} color={isDark ? "#555" : "#CCC"} />
+        </View>
+      )}
       <View style={styles.eventContent}>
         <View style={styles.eventHeader}>
           <Text style={styles.eventTitle} numberOfLines={1}>
